@@ -1,32 +1,54 @@
-import React from 'react';
-import { Link } from "react-router-dom"; 
+import React, { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const ForgotPassword = () => {
-  const handleSubmit = (e) => {
+  const [email, setEmail] = useState('');
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission logic here
+
+    try {
+      // Store email in local storage
+      localStorage.setItem('email', email);
+
+      const response = await axios.post('http://127.0.0.1:8000/api/password/reset/request', {
+        email: email
+      });
+      
+      console.log('Verification code sent successfully:', response.data.message); 
+      navigate('/TwoFactorVerification');
+    } catch (error) {
+      console.error('Error sending verification code:', error);
+      console.error('Failed to send verification code. Please try again later.');
+    }
   };
 
   return (
-    <div className="container">
-    <div className="form-container">
-      <div className="logo-container">
-        Forgot Password
-      </div>
-
-      <form className="form" onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="email">Email</label>
-          <input type="email" id="email" name="email" placeholder="Enter your email" required />
+    <div className="containerE">
+      <div className="form-container">
+        <div className="logo-container">
+          Forgot Password
         </div>
 
-        <button className="form-submit-btn" type="submit">Send Email</button>
-      </form>
+        <form className="formE" onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="email">Email</label>
+            <input 
+              type="email" 
+              id="email" 
+              name="email" 
+              placeholder="Enter your email" 
+              value={email} 
+              onChange={(e) => setEmail(e.target.value)} 
+              required 
+            />
+          </div>
 
-      <p class="signin">
-          You don't have an account? <Link to="/signup">Sign up right now</Link> {/* Use Link instead of <a> */}
-        </p>
-    </div>
+          <button className="form-submit-btn" type="submit">Send Email</button>
+        </form>
+      </div>
     </div>
   );
 };

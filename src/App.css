@@ -1,6 +1,4 @@
-body{
-  
-}
+
 
 .container1 {
   display: flex;
@@ -125,4 +123,7 @@ body{
     transform: scale(1.8);
     opacity: 0;
   }
+}
+.error{
+  color: red;
 }

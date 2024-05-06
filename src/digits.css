@@ -1,0 +1,121 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  /* Add your existing styles here */
+  .formD {
+    --black: #141414;
+    --royalblue : royalblue;
+    --royalblue-rider: rgb(4, 58, 221);
+    --white: #ffffff;
+    --af-white: #f3f3f3;
+    --ch-white: #5f93f3;
+    padding: 25px;
+    display: flex;
+    max-width: 420px;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+    color: var( --black);
+    background-color: var(--white);
+    border-radius: 8px;
+    position: relative;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); 
+  }
+  
+  /*----heading and description-----*/
+  
+  .info {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .title {
+    font-size: 25px;
+    font-weight: 600;
+  }
+  
+  .description {
+    margin-top: 10px;
+    font-size: 1rem;
+  }
+  
+  /*----input-fields------*/
+  
+  .formD .input-fields {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  
+  .formD .input-fields input {
+    height: 2.5em;
+    width: 2.5em;
+    outline: none;
+    text-align: center;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 1.5rem;
+    color: var(--black);
+    border-radius: 5px;
+    border: 1px solid var(--black);
+    background-color: var(--af-white);
+  }
+  
+  
+  /*-----verify and clear buttons-----*/
+  
+  .action-btns {
+    display: flex;
+    margin-top: 20px;
+    gap: 0.5rem;
+  }
+  
+  .verify {
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--white);
+    text-shadow: none;
+    background: var(--royalblue);
+    box-shadow: transparent;
+    border: 1px solid var(--royalblue);
+    transition: 0.3s ease;
+    user-select: none;
+    cursor: pointer;
+  }
+  
+  .verify:hover,.verify:focus {
+    color: var(--royalblue-rider);
+    background: var(--white);
+  }
+  
+  .clear {
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--ch-white);
+    text-shadow: none;
+    background: transparent;
+    border: 1px solid var(--ch-white);
+    transition: 0.3s ease;
+    user-select: none;
+    cursor: pointer;
+  }
+  
+  .clear:hover,.clear:focus {
+    color: var(--royalblue-rider);
+    background-color: transparent;
+    border: 1px solid var(--royalblue-rider);
+  }
+  
+ 
