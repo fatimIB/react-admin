@@ -6,12 +6,14 @@ import {
   NavLink,
 } from "react-router-dom";
 
-import Signup from './components/signup.component'; 
 import Login from './components/login.component';
 import ForgotPassword from './components/forgotPasswordRequest.component';
 import Home from './components/home.component';
 import TwoFactorVerification from './components/digitsVerification.component';
 import ChangePassword from './components/changePassword.component';
+import Products from './components/Product.component';
+import Team from './components/Team.component';
+import SaleApp from './components/Sales.component';
 import './App.css';
 import './forgotPassword.css';
 import './digits.css';
@@ -21,11 +23,14 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
         <Route path="/ForgotPassword" element={<ForgotPassword />} />
         <Route path="/home" element={<Home />} />
         <Route path="/TwoFactorVerification" element={<TwoFactorVerification />} />
         <Route path="/changePassword" element={<ChangePassword />} />
+        <Route path="/Products" element={<Products />} />
+        <Route path="/Team" element={<Team />} /> 
+        <Route path="/SaleApp" element={<SaleApp />} /> 
+
       </Routes>
     </BrowserRouter>
 );
