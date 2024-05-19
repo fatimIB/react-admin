@@ -50,6 +50,7 @@ const UpdateProductModal = ({ product, onUpdate, onClose }) => {
       );
 
       setSuccessMessage('Product updated successfully');
+      window.location.reload(); 
     } catch (err) {
       console.error('Error updating product:', err);
       setError('Error updating product. Please try again later.');

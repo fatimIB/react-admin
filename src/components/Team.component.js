@@ -1,11 +1,14 @@
 import React from "react";
 import Sidebar from "./SideBar.component";
+import DataTable from "./Tables/TeamTable.component";
 
 const Team = () => {
   return (
     <>
-      <Sidebar/>
-      <h1>Team</h1>
+      <div style={{ backgroundColor: "#f0edee", minHeight: "100vh" }}>
+        <Sidebar />
+        <DataTable />
+      </div>
     </>
   );
 };

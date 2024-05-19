@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import "../AddProduct.css";
+import "../../AddProduct.css";
 
 const AddProduct = () => {
   const [name, setName] = useState('');
@@ -40,6 +40,7 @@ const AddProduct = () => {
       // Handle success response
       console.log(response.data);
       setSuccessMessage('Product added successfully');
+      window.location.reload(); 
     } catch (err) {
       console.error('Error adding product:', err);
       setError('Error adding product. Please try again later.');

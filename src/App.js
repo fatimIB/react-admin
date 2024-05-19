@@ -7,10 +7,10 @@ import {
 } from "react-router-dom";
 
 import Login from './components/login.component';
-import ForgotPassword from './components/forgotPasswordRequest.component';
+import ForgotPassword from './components/ForgotPassword/forgotPasswordRequest.component';
 import Home from './components/home.component';
-import TwoFactorVerification from './components/digitsVerification.component';
-import ChangePassword from './components/changePassword.component';
+import TwoFactorVerification from './components/ForgotPassword/digitsVerification.component';
+import ChangePassword from './components/ForgotPassword/changePassword.component';
 import Products from './components/Product.component';
 import Team from './components/Team.component';
 import SaleApp from './components/Sales.component';
