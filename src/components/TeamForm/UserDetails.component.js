@@ -13,7 +13,7 @@ const UserDetails = ({ user, onClose }) => {
   const fetchPoints = async () => {
     try {
       const response = await axios.get(`http://127.0.0.1:8000/api/points/${user.id}`);
-      setPoints(response.data.amount); // Assuming the points endpoint returns an object with an "amount" property
+      setPoints(response.data.total_points); // Setting the total points from the response
     } catch (error) {
       console.error('Error fetching points:', error);
     }

@@ -1,14 +1,16 @@
 import React, { useState } from "react";
+import axios from "axios";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Home from "../assets/home-solid.svg";
 import Team from "../assets/social.svg";
-import Calender from "../assets/sceduled.svg";
-import Projects from "../assets/starred.svg";
-import Documents from "../assets/draft.svg";
 import PowerOff from "../assets/power-off-solid.svg";
 import Product from "../assets/Product.svg";
-import { MdAccountCircle } from 'react-icons/md'; 
+import withdraw from "../assets/withdraw.svg";
+import sale from "../assets/Sale.svg";
+import points from "../assets/Points.svg"
+import { MdAccountCircle } from "react-icons/md";
 
 const Container = styled.div`
   position: fixed;
@@ -73,7 +75,6 @@ const SidebarContainer = styled.div`
   justify-content: space-between;
 
   position: relative;
-  
 `;
 
 const Logo = styled.div`
@@ -200,8 +201,8 @@ const Name = styled.div`
 
 const Logout = styled.button`
   border: none;
-  width: 2rem;
-  height: 2rem;
+  width: 3.2rem;
+  height: 3.2rem;
   background-color: transparent;
 
   img {
@@ -224,9 +225,31 @@ const Sidebar = () => {
 
   const [profileClick, setprofileClick] = useState(false);
   const handleProfileClick = () => setprofileClick(!profileClick);
+  
+  const navigate = useNavigate(); 
+
+  const handleLogout = async () => {
+    try {
+      const token = sessionStorage.getItem('token');
+      if (!token) {
+        throw new Error('Authentication token not found.');
+      }
+      await axios.post("http://127.0.0.1:8000/api/admin/logout", null, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+      });
+      sessionStorage.removeItem("token");
+      localStorage.clear();
+      navigate("/");
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
+  };
+  
 
   return (
-    <Container style={{zIndex: 1000  }}>
+    <Container style={{ zIndex: 1000 }}>
       <Button clicked={click} onClick={() => handleClick()}>
         Click
       </Button>
@@ -262,33 +285,40 @@ const Sidebar = () => {
             activeClassName="active"
             to="/SaleApp"
           >
-            <img src={Documents} alt="Documents" />
-            <Text clicked={click}>Documents</Text>
+            <img src={sale} alt="sale" />
+            <Text clicked={click}>Sales</Text>
           </Item>
           <Item
             onClick={() => setClick(false)}
             activeClassName="active"
-            to="/projects"
+            to="/Points"
           >
-            <img src={Projects} alt="Projects" />
-            <Text clicked={click}>Projects</Text>
+            <img src={points} alt="points" />
+            <Text clicked={click}>Points</Text>
+          </Item>
+          <Item
+            onClick={() => setClick(false)}
+            activeClassName="active"
+            to="/Withdraw"
+          >
+            <img src={withdraw} alt="withdraw" />
+            <Text clicked={click}>Withdraws</Text>
           </Item>
         </SlickBar>
 
         <Profile clicked={profileClick}>
-        <MdAccountCircle 
-    onClick={() => handleProfileClick()}
-    size={32} 
-    color="white" 
-    style={{ cursor: 'pointer' }}
-  />
+          <MdAccountCircle
+            onClick={() => handleProfileClick()}
+            size={32}
+            color="white"
+            style={{ cursor: "pointer" }}
+          />
           <Details clicked={profileClick}>
             <Name>
-              <h4>Jhon&nbsp;Doe</h4>
-              <a href="/#">view&nbsp;profile</a>
+              <h4>Logout</h4>
             </Name>
 
-            <Logout>
+            <Logout onClick={handleLogout}>
               <img src={PowerOff} alt="logout" />
             </Logout>
           </Details>

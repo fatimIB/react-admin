@@ -129,6 +129,7 @@ const SaleTable = () => {
               <TableCell align="center">User Name</TableCell>
               <TableCell align="center">Sale Details</TableCell>
               <TableCell align="center">Total Price</TableCell>
+              <TableCell align="center">Commission</TableCell> {/* Add commission column */}
               <TableCell align="center">Update</TableCell>
               <TableCell align="center">Delete</TableCell>
             </TableRow>
@@ -139,6 +140,7 @@ const SaleTable = () => {
                 <TableCell align="center">{sale.user_name}</TableCell>
                 <TableCell align="center">{sale.products}</TableCell>
                 <TableCell align="center">{sale.total_price}</TableCell>
+                <TableCell align="center">{sale.commission}</TableCell> {/* Add commission data */}
                 <TableCell align="center">
                   <button style={{ marginLeft: "9%" }} className="update" onClick={() => handleUpdateClick(sale)}>
                     Update

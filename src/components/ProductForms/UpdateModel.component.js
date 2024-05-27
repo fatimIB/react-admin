@@ -72,7 +72,7 @@ const UpdateProductModal = ({ product, onUpdate, onClose }) => {
         </Typography>
         <form onSubmit={handleSubmit}>
           <div className="group">
-          <label htmlFor="name">Name</label>
+            <label htmlFor="name">Name</label>
             <input
               type="text"
               name="name"
@@ -80,10 +80,9 @@ const UpdateProductModal = ({ product, onUpdate, onClose }) => {
               onChange={handleChange}
               required
             />
-            
           </div>
           <div className="group">
-          <label htmlFor="price">Price</label>
+            <label htmlFor="price">Price</label>
             <input
               type="text"
               name="price"
@@ -91,21 +90,9 @@ const UpdateProductModal = ({ product, onUpdate, onClose }) => {
               onChange={handleChange}
               required
             />
-            
           </div>
           <div className="group">
-          <label htmlFor="sale_price">Sale Price</label>
-            <input
-              type="text"
-              name="sale_price"
-              value={updatedProduct.sale_price}
-              onChange={handleChange}
-              required
-            />
-            
-          </div>
-          <div className="group">
-          <label htmlFor="code">Code</label>
+            <label htmlFor="code">Code</label>
             <input
               type="text"
               name="code"
@@ -113,7 +100,6 @@ const UpdateProductModal = ({ product, onUpdate, onClose }) => {
               onChange={handleChange}
               required
             />
-            
           </div>
           <Button type="submit" disabled={loading}>
             Submit

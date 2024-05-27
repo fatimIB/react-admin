@@ -127,7 +127,6 @@ const DataTable = () => {
             <TableRow>
               <TableCell align="center">Name</TableCell>
               <TableCell align="center">Price</TableCell>
-              <TableCell align="center">Sale Price</TableCell>
               <TableCell align="center">Code</TableCell>
               <TableCell align="center">Update</TableCell>
               <TableCell align="center">Delete</TableCell>
@@ -140,18 +139,19 @@ const DataTable = () => {
                   {product.name}
                 </TableCell>
                 <TableCell align="center">{product.price}</TableCell>
-                <TableCell align="center">{product.sale_price}</TableCell>
                 <TableCell align="center">{product.code}</TableCell>
-                <TableCell >
-                  <button style={{ marginLeft: "9%"}}
+                <TableCell align="center">
+                  <button
+                    style={{ marginLeft: "25%" }}
                     className="update"
                     onClick={() => handleUpdateClick(product)}
                   >
                     Update
                   </button>
                 </TableCell>
-                <TableCell >
-                  <button style={{ marginLeft: "9%"}}
+                <TableCell align="center">
+                  <button
+                    style={{ marginLeft: "25%" }}
                     className="delete"
                     onClick={() => handleDeleteClick(product.id)}
                   >

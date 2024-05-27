@@ -14,6 +14,8 @@ import ChangePassword from './components/ForgotPassword/changePassword.component
 import Products from './components/Product.component';
 import Team from './components/Team.component';
 import SaleApp from './components/Sales.component';
+import Points from './components/Points.component';
+import Withdraw from './components/Withdraw.component';
 import './App.css';
 import './forgotPassword.css';
 import './digits.css';
@@ -30,6 +32,8 @@ function App() {
         <Route path="/Products" element={<Products />} />
         <Route path="/Team" element={<Team />} /> 
         <Route path="/SaleApp" element={<SaleApp />} /> 
+        <Route path="/Points" element={<Points />} /> 
+        <Route path="/Withdraw" element={<Withdraw />} /> 
 
       </Routes>
     </BrowserRouter>

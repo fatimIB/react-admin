@@ -5,7 +5,6 @@ import "../../AddProduct.css";
 const AddProduct = () => {
   const [name, setName] = useState('');
   const [price, setPrice] = useState('');
-  const [salePrice, setSalePrice] = useState('');
   const [code, setCode] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -27,7 +26,6 @@ const AddProduct = () => {
         {
           name,
           price,
-          sale_price: salePrice,
           code
         },
         {
@@ -72,16 +70,6 @@ const AddProduct = () => {
             required
           />
           <label htmlFor="name">Price</label>
-        </div>
-        <div className="group">
-          <input
-            placeholder=""
-            type="text"
-            value={salePrice}
-            onChange={(e) => setSalePrice(e.target.value)}
-            required
-          />
-          <label htmlFor="name">Sale Price</label>
         </div>
         <div className="group">
           <input

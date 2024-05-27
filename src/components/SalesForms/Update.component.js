@@ -4,56 +4,54 @@ import zIndex from "@mui/material/styles/zIndex";
 
 // Styles
 const formContainerStyle = {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
-    background: 'rgba(0, 0, 0, 0.5)', 
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backdropFilter: 'blur(2px)', 
-    zIndex:9999,
-  };
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: '100%',
+  background: 'rgba(0, 0, 0, 0.5)', 
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  backdropFilter: 'blur(2px)', 
+  zIndex:9999,
+};
   
-  const formStyle = {
-    background: 'white',
-    padding: '20px',
-    borderRadius: '5px',
-    width: '300px',
-    textAlign: 'center',
-    position: 'relative',
-  };
+const formStyle = {
+  background: 'white',
+  padding: '20px',
+  borderRadius: '5px',
+  width: '300px',
+  textAlign: 'center',
+  position: 'relative',
+};
   
-  const labelStyle = {
-      marginBottom: '8px',
-      display: 'block',
-      fontWeight: 'bold',
-    };
+const labelStyle = {
+  marginBottom: '8px',
+  display: 'block',
+  fontWeight: 'bold',
+};
   
-    const closeButtonStyle = {
-        position: 'absolute',
-        top: '5px',
-        right: '5px',
-        cursor: 'pointer',
-        fontSize: '20px',
-      };
+const closeButtonStyle = {
+  position: 'absolute',
+  top: '5px',
+  right: '5px',
+  cursor: 'pointer',
+  fontSize: '20px',
+};
   
-  const updateButtonStyle = {
-    marginTop: '20px',
-    padding: '10px 20px',
-    backgroundColor: '#007bff',
-    color: 'white',
-    borderRadius: '5px',
-    cursor: 'pointer',
-    border: 'none',
-    fontSize: '16px',
-  };
+const updateButtonStyle = {
+  marginTop: '20px',
+  padding: '10px 20px',
+  backgroundColor: '#007bff',
+  color: 'white',
+  borderRadius: '5px',
+  cursor: 'pointer',
+  border: 'none',
+  fontSize: '16px',
+};
 
-
-  
-  const UpdateSales = ({ sale, onClose }) => {
+const UpdateSales = ({ sale, onClose }) => {
   const [users, setUsers] = useState([]);
   const [products, setProducts] = useState([]);
   const [selectedUser, setSelectedUser] = useState('');
@@ -63,11 +61,23 @@ const formContainerStyle = {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
+  const [totalPrice, setTotalPrice] = useState(0);
 
   useEffect(() => {
     fetchUsers();
     fetchProducts();
   }, []);
+
+  useEffect(() => {
+    // Calculate total price when quantities or products change
+    let total = 0;
+    selectedProducts.forEach(productId => {
+      const product = products.find(p => p.id === parseInt(productId));
+      const quantity = quantities[productId] || 0;
+      total += product ? product.price * quantity : 0;
+    });
+    setTotalPrice(total);
+  }, [quantities, selectedProducts, products]);
 
   const fetchUsers = async () => {
     try {
@@ -105,6 +115,13 @@ const formContainerStyle = {
     if (!selectedProducts.includes(selectedProductId)) {
       setSelectedProducts([...selectedProducts, selectedProductId]);
     }
+    const price = getProductPrice(selectedProductId);
+    setTotalPrice(totalPrice + parseFloat(price));
+  };
+
+  const getProductPrice = (productId) => {
+    const product = products.find((product) => product.id === parseInt(productId));
+    return product ? product.price : '';
   };
 
   const handleQuantityChange = (e, productId) => {
@@ -113,16 +130,6 @@ const formContainerStyle = {
       ...prevQuantities,
       [productId]: value
     }));
-  };
-
-  const calculateTotalPrice = () => {
-    let totalPrice = 0;
-    selectedProducts.forEach(productId => {
-      const product = products.find(product => product.id === parseInt(productId));
-      const quantity = quantities[productId] || 0;
-      totalPrice += product ? product.sale_price * quantity : 0;
-    });
-    return totalPrice;
   };
 
   const handleSubmit = async (event) => {
@@ -143,7 +150,7 @@ const formContainerStyle = {
           id: productId,
           quantity: quantities[productId] || 1,
         })),
-        total_price: calculateTotalPrice(),
+        total_price: totalPrice,
       };
   
       const response = await axios.post(`http://127.0.0.1:8000/api/sales/update/${sale.id}`, data, {
@@ -164,8 +171,6 @@ const formContainerStyle = {
     }
   };
   
-  
-
   return (
     <div style={formContainerStyle} className="add-sales-container">
       <div style={formStyle} className="add-sales-card">
@@ -189,7 +194,7 @@ const formContainerStyle = {
             <select value={selectedProduct} onChange={handleProductChange} size="3"  multiple>
               {products.map((product) => (
                 <option key={product.id} value={product.id}>
-                  {product.name} (Sale Price: ${product.sale_price})
+                  {product.name} (Price: ${product.price})
                 </option>
               ))}
             </select>
@@ -217,7 +222,7 @@ const formContainerStyle = {
             <div style={labelStyle}>Total Price</div>
             <input
               type="text"
-              value={calculateTotalPrice()}
+              value={totalPrice}
               readOnly
               placeholder="Total Price"
             />
@@ -231,8 +236,5 @@ const formContainerStyle = {
     </div>
   );
 };
-
-
-
 
 export default UpdateSales;
