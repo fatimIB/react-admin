@@ -1,21 +1,16 @@
 import React from "react";
 import Sidebar from "./SideBar.component";
-import styled from "styled-components";
-
-const Container = styled.div`
-  margin-left: 200rem; /* Adjust the margin as needed */
-  padding: 1rem;
-  
-`;
-
+import Cards from "./HomeStatictics/Cards.component";
+import SalesGraph from "./HomeStatictics/SalesGraph.component";
 
 const Home = () => {
   return (
     <>
-    <Sidebar />
-    <div >
-    <h1>Home</h1>
-    </div>
+    <div style={{ backgroundColor: "#f0edee", minHeight: "100vh" }}>
+        <Sidebar />
+        <Cards />
+        <SalesGraph />
+      </div>
   </>
   );
 };

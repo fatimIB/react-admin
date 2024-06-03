@@ -20,7 +20,7 @@ const UpdateForm = ({ user, onClose }) => {
 
   const handleSubmit = async () => {
     try {
-      const token = sessionStorage.getItem('token');
+      const token = localStorage.getItem('token');
       if (!token) {
         throw new Error('Authentication token not found.');
       }

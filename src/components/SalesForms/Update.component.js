@@ -81,7 +81,7 @@ const UpdateSales = ({ sale, onClose }) => {
 
   const fetchUsers = async () => {
     try {
-      const token = sessionStorage.getItem("token");
+      const token = localStorage.getItem("token");
       if (!token) {
         throw new Error("Authentication token not found.");
       }
@@ -175,7 +175,7 @@ const UpdateSales = ({ sale, onClose }) => {
     <div style={formContainerStyle} className="add-sales-container">
       <div style={formStyle} className="add-sales-card">
       <span style={closeButtonStyle} onClick={onClose}>X</span>
-        <span className="add-sales-title">Add Sale</span>
+        <span className="add-sales-title">Update Sale</span>
         <form className="add-sales-form" onSubmit={handleSubmit}>
         <div htmlFor="user" style={labelStyle}>User</div>
           <div className="add-sales-group">

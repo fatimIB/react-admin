@@ -60,7 +60,7 @@ const DataTable = () => {
 
   const handleDeleteConfirmation = async () => {
     try {
-      const token = sessionStorage.getItem("token");
+      const token = localStorage.getItem("token");
       if (!token) {
         throw new Error("Authentication token not found.");
       }
@@ -129,7 +129,6 @@ const DataTable = () => {
               <TableCell align="center">Price</TableCell>
               <TableCell align="center">Code</TableCell>
               <TableCell align="center">Update</TableCell>
-              <TableCell align="center">Delete</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

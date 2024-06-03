@@ -6,12 +6,12 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false); // State variable to track loading state
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-    setLoading(true); // Set loading to true when form is submitted
+    setLoading(true);
 
     try {
       const response = await axios.post(
@@ -23,16 +23,18 @@ const Login = () => {
       );
 
       const { user, token } = response.data;
-      sessionStorage.setItem("token", token);
+      localStorage.setItem("token", token);
       window.location.href = "/home";
     } catch (err) {
       if (err.response && err.response.status === 401) {
         setError("Wrong credentials. Please try again.");
+      } else if  (err.response && err.response.status === 403) {
+        setError("Users are not allowed to login here.");
       } else {
-        setError("Failed to login. Please try again later.");
+        setError("Failed to login. Please try again later.")
       }
     } finally {
-      setLoading(false); // Reset loading state whether request succeeds or fails
+      setLoading(false);
     }
   };
 
@@ -68,7 +70,7 @@ const Login = () => {
             Forgot Password
           </Link>
           <button type="submit" className="submit" disabled={loading}>
-            {loading ? "Logging in..." : "Submit"} {/* Display loading indicator or submit text */}
+            {loading ? "Logging in..." : "Submit"}
           </button>
           {error && <p className="error">{error}</p>}
         </form>

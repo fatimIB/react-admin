@@ -14,6 +14,7 @@ const WithdrawTable = ({ token }) => {
   const [withdraws, setWithdraws] = useState([]);
   const [selectedWithdraw, setSelectedWithdraw] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
 
   useEffect(() => {
     fetchWithdraws();
@@ -21,7 +22,7 @@ const WithdrawTable = ({ token }) => {
 
   const fetchWithdraws = async () => {
     try {
-      const token = sessionStorage.getItem("token");
+      const token = localStorage.getItem("token");
       if (!token) {
         throw new Error("Authentication token not found.");
       }
@@ -38,6 +39,11 @@ const WithdrawTable = ({ token }) => {
   };
 
   const handleOpenModal = (withdraw) => {
+    if (withdraw.status === "paid") {
+      setModalMessage("You cannot update the status. It's already paid.");
+      setIsModalOpen(true);
+      return;
+    }
     setSelectedWithdraw(withdraw);
     setIsModalOpen(true);
   };
@@ -45,16 +51,17 @@ const WithdrawTable = ({ token }) => {
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setSelectedWithdraw(null);
+    setModalMessage("");
   };
 
   const handleUpdateStatus = async (newStatus) => {
     if (!selectedWithdraw) return;
 
     try {
-        const token = sessionStorage.getItem("token");
-        if (!token) {
-          throw new Error("Authentication token not found.");
-        }
+      const token = localStorage.getItem("token");
+      if (!token) {
+        throw new Error("Authentication token not found.");
+      }
       const response = await axios.put(
         `http://127.0.0.1:8000/api/withdraws/${selectedWithdraw.id}`,
         { status: newStatus },
@@ -166,42 +173,53 @@ const WithdrawTable = ({ token }) => {
           }}
         >
           <h2>Change Status</h2>
-          <p style={{ marginTop: 20 }}>Do you want to change the status to:</p>
-          <Button
-            onClick={() => handleUpdateStatus("pending")}
-            variant="contained"
-            style={{
-              backgroundColor: "#ffc107",
-              marginTop: 20,
-              marginBottom: 10,
-            }}
-          >
-            Pending
-          </Button>
-          <Button
-            onClick={() => handleUpdateStatus("paid")}
-            variant="contained"
-            style={{
-              backgroundColor: "#30a947",
-              marginLeft: "10px",
-              marginTop: 20,
-              marginBottom: 10,
-            }}
-          >
-            Paid
-          </Button>
-          <Button
-            onClick={() => handleUpdateStatus("rejected")}
-            variant="contained"
-            style={{
-              backgroundColor: "#e41125",
-              marginLeft: "10px",
-              marginTop: 20,
-              marginBottom: 10,
-            }}
-          >
-            Rejected
-          </Button>
+          {modalMessage ? (
+            <p>{modalMessage}</p>
+          ) : (
+            <>
+              <p style={{ marginTop: 20 }}>Do you want to change the status to:</p>
+              {selectedWithdraw?.status === "pending" && (
+                <>
+                  <Button
+                    onClick={() => handleUpdateStatus("paid")}
+                    variant="contained"
+                    style={{
+                      backgroundColor: "#30a947",
+                      marginTop: 20,
+                      marginBottom: 10,
+                    }}
+                  >
+                    Paid
+                  </Button>
+                  <Button
+                    onClick={() => handleUpdateStatus("rejected")}
+                    variant="contained"
+                    style={{
+                      backgroundColor: "#e41125",
+                      marginLeft: "10px",
+                      marginTop: 20,
+                      marginBottom: 10,
+                    }}
+                  >
+                    Rejected
+                  </Button>
+                </>
+              )}
+              {selectedWithdraw?.status === "rejected" && (
+                <Button
+                  onClick={() => handleUpdateStatus("paid")}
+                  variant="contained"
+                  style={{
+                    backgroundColor: "#30a947",
+                    marginTop: 20,
+                    marginBottom: 10,
+                  }}
+                >
+                  Paid
+                </Button>
+              )}
+            </>
+          )}
         </div>
       </Modal>
     </div>

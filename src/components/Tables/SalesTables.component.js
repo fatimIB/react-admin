@@ -26,7 +26,7 @@ const SaleTable = () => {
 
   const fetchSales = async () => {
     try {
-      const token = sessionStorage.getItem("token");
+      const token = localStorage.getItem("token");
       if (!token) {
         throw new Error("Authentication token not found.");
       }
@@ -73,7 +73,7 @@ const SaleTable = () => {
 
   const handleConfirmDelete = async () => {
     try {
-      const token = sessionStorage.getItem("token");
+      const token = localStorage.getItem("token");
       if (!token) {
         throw new Error("Authentication token not found.");
       }
@@ -151,6 +151,7 @@ const SaleTable = () => {
                     Delete
                   </button>
                 </TableCell>
+               
               </TableRow>
             ))}
           </TableBody>

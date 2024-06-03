@@ -44,7 +44,7 @@ const PointsTable = ({ token }) => {
     if (!selectedPoint) return;
 
     try {
-      const token = sessionStorage.getItem("token");
+      const token = localStorage.getItem("token");
       if (!token) {
         throw new Error("Authentication token not found.");
       }

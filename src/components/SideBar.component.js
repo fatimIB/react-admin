@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
-import { NavLink } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import Home from "../assets/home-solid.svg";
 import Team from "../assets/social.svg";
 import PowerOff from "../assets/power-off-solid.svg";
 import Product from "../assets/Product.svg";
 import withdraw from "../assets/withdraw.svg";
 import sale from "../assets/Sale.svg";
-import points from "../assets/Points.svg"
+import points from "../assets/Points.svg";
+
 import { MdAccountCircle } from "react-icons/md";
 
 const Container = styled.div`
@@ -24,7 +24,20 @@ const Container = styled.div`
     }
   }
 `;
+const Spinner = styled.div`
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left-color: var(--white);
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  animation: spin 1s linear infinite;
 
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+`;
 const Button = styled.button`
   background-color: var(--black);
   border: none;
@@ -221,32 +234,34 @@ const Logout = styled.button`
 
 const Sidebar = () => {
   const [click, setClick] = useState(false);
+  const [loading, setLoading] = useState(false);
   const handleClick = () => setClick(!click);
 
   const [profileClick, setprofileClick] = useState(false);
   const handleProfileClick = () => setprofileClick(!profileClick);
-  
-  const navigate = useNavigate(); 
+
+  const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
-      const token = sessionStorage.getItem('token');
+      setLoading(true); // Set loading state to true during logout
+      const token = localStorage.getItem("token");
       if (!token) {
-        throw new Error('Authentication token not found.');
+        throw new Error("Authentication token not found.");
       }
       await axios.post("http://127.0.0.1:8000/api/admin/logout", null, {
         headers: {
-          Authorization: `Bearer ${token}`
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       });
-      sessionStorage.removeItem("token");
-      localStorage.clear();
+      localStorage.removeItem('token');
       navigate("/");
     } catch (error) {
       console.error("Logout error:", error);
+    } finally {
+      setLoading(false); 
     }
   };
-  
 
   return (
     <Container style={{ zIndex: 1000 }}>
@@ -315,9 +330,14 @@ const Sidebar = () => {
           />
           <Details clicked={profileClick}>
             <Name>
-              <h4>Logout</h4>
+              {loading ? ( 
+                <>
+                  <h6 ><Spinner /></h6>
+                </>
+              ) : (
+                <h4>Logout</h4>
+              )}
             </Name>
-
             <Logout onClick={handleLogout}>
               <img src={PowerOff} alt="logout" />
             </Logout>

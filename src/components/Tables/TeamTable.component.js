@@ -30,7 +30,7 @@ const DataTable = () => {
 
   const fetchUsers = async () => {
     try {
-      const token = sessionStorage.getItem("token");
+      const token = localStorage.getItem("token");
       if (!token) {
         throw new Error("Authentication token not found.");
       }
@@ -93,7 +93,7 @@ const DataTable = () => {
 
   const deleteUser = async (userId) => {
     try {
-      const token = sessionStorage.getItem("token");
+      const token = localStorage.getItem("token");
       if (!token) {
         throw new Error("Authentication token not found.");
       }
@@ -151,7 +151,6 @@ const DataTable = () => {
               <TableCell align="center">Name</TableCell>
               <TableCell align="center">Email</TableCell>
               <TableCell align="center">Phone</TableCell>
-              <TableCell align="center">Status</TableCell>
               <TableCell align="center">Action</TableCell>
             </TableRow>
           </TableHead>
@@ -163,7 +162,6 @@ const DataTable = () => {
                 </TableCell>
                 <TableCell align="center">{user.email}</TableCell>
                 <TableCell align="center">{user.phone}</TableCell>
-                <TableCell align="center">Active</TableCell>
 
                 <TableCell align="center">
                   <button class="tooltip" onClick={() => handleViewClick(user)}>
@@ -226,6 +224,7 @@ const DataTable = () => {
                     </svg>
                     <span class="tooltiptext">delete</span>
                   </button>
+                 
                 </TableCell>
               </TableRow>
             ))}
